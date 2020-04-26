@@ -12,7 +12,7 @@ namespace Gma.DataStructures.StringSearch.SampleConsoleApp
     {
         private static void Main(string[] args)
         {
-            var trie = new SuffixTrie<int>(3);
+            var trie = new UkkonenTrie<int>(3);
             //You can replace it with other trie data structures too 
             //ITrie<int> trie = new Trie<int>();
             //ITrie<int> trie = new PatriciaSuffixTrie<int>(3);
@@ -23,9 +23,7 @@ namespace Gma.DataStructures.StringSearch.SampleConsoleApp
                 //Build-up
                 BuildUp("sample.txt", trie);
                 //Look-up
-                LookUp("overs", trie);
-                LookUp("porta", trie);
-                LookUp("supercalifragilisticexpialidocious", trie);
+                LookUp("the", trie);
             }
             catch (IOException ioException) { Console.WriteLine("Error: {0}", ioException.Message);}
             catch (UnauthorizedAccessException unauthorizedAccessException) { Console.WriteLine("Error: {0}", unauthorizedAccessException.Message);}

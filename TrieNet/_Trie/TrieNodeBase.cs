@@ -17,7 +17,9 @@ namespace Gma.DataStructures.StringSearch
 
         public void Add(string key, int position, TValue value)
         {
-            if (key == null) throw new ArgumentNullException("key");
+            if (key == null) 
+                throw new ArgumentNullException("key");
+
             if (EndOfString(position, key))
             {
                 AddValue(value);
@@ -32,41 +34,38 @@ namespace Gma.DataStructures.StringSearch
 
         protected abstract TrieNodeBase<TValue> GetOrCreateChild(char key);
 
-        protected virtual IEnumerable<TValue> Retrieve(string query, int position)
-        {
-            return
-                EndOfString(position, query)
-                    ? ValuesDeep()
-                    : SearchDeep(query, position);
-        }
+        protected virtual List<TValue> Retrieve(string query, int position)
+            => EndOfString(position, query) ? ValuesDeep(): SearchDeep(query, position);
 
-        protected virtual IEnumerable<TValue> SearchDeep(string query, int position)
+        protected virtual List<TValue> SearchDeep(string query, int position)
         {
             TrieNodeBase<TValue> nextNode = GetChildOrNull(query, position);
             return nextNode != null
                        ? nextNode.Retrieve(query, position + nextNode.KeyLength)
-                       : Enumerable.Empty<TValue>();
+                       : new List<TValue>();
         }
 
         protected abstract TrieNodeBase<TValue> GetChildOrNull(string query, int position);
 
         private static bool EndOfString(int position, string text)
+            => position >= text.Length;
+
+        private List<TValue> ValuesDeep()
         {
-            return position >= text.Length;
+            List<TValue> values = new List<TValue>();
+            foreach (var t in Subtree())
+                values.AddRange(t.Values());
+
+            return values;
         }
 
-        private IEnumerable<TValue> ValuesDeep()
+        protected List<TrieNodeBase<TValue>> Subtree()
         {
-            return 
-                Subtree()
-                    .SelectMany(node => node.Values());
-        }
+            List<TrieNodeBase<TValue>> tree = new List<TrieNodeBase<TValue>>() { this };
+            foreach (var child in Children())
+                tree.AddRange(child.Subtree());
 
-        protected IEnumerable<TrieNodeBase<TValue>> Subtree()
-        {
-            return
-                Enumerable.Repeat(this, 1)
-                    .Concat(Children().SelectMany(child => child.Subtree()));
+            return tree;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using NUnit.Framework;
 
+using Gma.DataStructures.StringSearch;
 namespace Gma.DataStructures.StringSearch.Test
 {
     [TestFixture]

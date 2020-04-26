@@ -20,10 +20,22 @@ namespace Gma.DataStructures.StringSearch
 
        
 
-        public IEnumerable<T> GetData()
+        public List<T> GetData()
         {
-            var childData = _edges.Values.Select((e) => e.Target).SelectMany((t) => t.GetData());
-            return _data.Concat(childData).Distinct();
+            List<T> t = _data.ToList();
+
+            foreach (var n in _edges.Values)
+            {
+                List<T> data = n.Target.GetData();
+                foreach (var d in data)
+                {
+                    if (!_data.Contains(d))
+                        t.Add(d);
+                }
+                    
+            }
+           
+            return t;
         }
 
         public void AddRef(T value)

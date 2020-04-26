@@ -12,7 +12,7 @@ namespace Gma.DataStructures.StringSearch
     /// <typeparam name="TValue"></typeparam>
     public interface ITrie<TValue>
     {
-        IEnumerable<TValue> Retrieve(string query);
+        List<TValue> Retrieve(string query);
         void Add(string key, TValue value);
     }
 }

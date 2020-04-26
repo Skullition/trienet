@@ -5,52 +5,37 @@ namespace Gma.DataStructures.StringSearch
 {
     public struct SplitResult
     {
-        private readonly StringPartition m_Head;
-        private readonly StringPartition m_Rest;
-
         public SplitResult(StringPartition head, StringPartition rest)
         {
-            m_Head = head;
-            m_Rest = rest;
+            Head = head;
+            Rest = rest;
         }
 
-        public StringPartition Rest
-        {
-            get { return m_Rest; }
-        }
-
-        public StringPartition Head
-        {
-            get { return m_Head; }
-        }
+        public StringPartition Rest { get; }
+        public StringPartition Head { get; }
 
         public bool Equals(SplitResult other)
-        {
-            return m_Head == other.m_Head && m_Rest == other.m_Rest;
-        }
+            => Head == other.Head && Rest == other.Rest;
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            return obj is SplitResult && Equals((SplitResult) obj);
+            if (obj is null) 
+                return false;
+            return obj is SplitResult result && Equals(result);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (m_Head.GetHashCode()*397) ^ m_Rest.GetHashCode();
+                return (Head.GetHashCode()*397) ^ Rest.GetHashCode();
             }
         }
 
         public static bool operator ==(SplitResult left, SplitResult right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         public static bool operator !=(SplitResult left, SplitResult right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
     }
 }

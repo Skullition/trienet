@@ -15,7 +15,6 @@ namespace Gma.DataStructures.StringSearch
     public struct StringPartition : IEnumerable<char>
     {
         private readonly string m_Origin;
-        private readonly int m_PartitionLength;
         private readonly int m_StartIndex;
 
         public StringPartition(string origin)
@@ -37,24 +36,20 @@ namespace Gma.DataStructures.StringSearch
             m_Origin = string.Intern(origin);
             m_StartIndex = startIndex;
             int availableLength = m_Origin.Length - startIndex;
-            m_PartitionLength = Math.Min(partitionLength, availableLength);
+            Length = Math.Min(partitionLength, availableLength);
         }
 
-        public char this[int index]
-        {
-            get { return m_Origin[m_StartIndex + index]; }
-        }
+        public char this[int index] 
+            => m_Origin[m_StartIndex + index];
 
-        public int Length
-        {
-            get { return m_PartitionLength; }
-        }
+        public int Length { get; }
+
 
         #region IEnumerable<char> Members
 
         public IEnumerator<char> GetEnumerator()
         {
-            for (int i = 0; i < m_PartitionLength; i++)
+            for (int i = 0; i < Length; i++)
             {
                 yield return this[i];
             }
@@ -68,15 +63,15 @@ namespace Gma.DataStructures.StringSearch
         #endregion
 
         public bool Equals(StringPartition other)
-        {
-            return string.Equals(m_Origin, other.m_Origin) && m_PartitionLength == other.m_PartitionLength &&
+            => string.Equals(m_Origin, other.m_Origin) && Length == other.Length &&
                    m_StartIndex == other.m_StartIndex;
-        }
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            return obj is StringPartition && Equals((StringPartition) obj);
+            if (ReferenceEquals(null, obj)) 
+                return false;
+
+            return obj is StringPartition sp && Equals(sp);
         }
 
         public override int GetHashCode()
@@ -84,7 +79,7 @@ namespace Gma.DataStructures.StringSearch
             unchecked
             {
                 int hashCode = (m_Origin != null ? m_Origin.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ m_PartitionLength;
+                hashCode = (hashCode*397) ^ Length;
                 hashCode = (hashCode*397) ^ m_StartIndex;
                 return hashCode;
             }
@@ -93,9 +88,7 @@ namespace Gma.DataStructures.StringSearch
         public bool StartsWith(StringPartition other)
         {
             if (Length < other.Length)
-            {
                 return false;
-            }
 
             for (int i = 0; i < other.Length; i++)
             {
@@ -146,13 +139,9 @@ namespace Gma.DataStructures.StringSearch
         }
 
         public static bool operator ==(StringPartition left, StringPartition right)
-        {
-            return left.Equals(right);
-        }
+            => left.Equals(right);
 
         public static bool operator !=(StringPartition left, StringPartition right)
-        {
-            return !(left == right);
-        }
+            => !(left == right);
     }
 }

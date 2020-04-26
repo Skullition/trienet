@@ -17,10 +17,8 @@ namespace Gma.DataStructures.StringSearch
         {
         }
 
-        public IEnumerable<TValue> Retrieve(string query)
-        {
-            return Retrieve(query, 0);
-        }
+        public List<TValue> Retrieve(string query)
+            => Retrieve(query, 0);
 
         public virtual void Add(string key, TValue value)
         {
@@ -29,8 +27,6 @@ namespace Gma.DataStructures.StringSearch
         }
 
         internal override void Add(StringPartition keyRest, TValue value)
-        {
-            GetOrCreateChild(keyRest, value);
-        }
+            => GetOrCreateChild(keyRest, value);
     }
 }

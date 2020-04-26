@@ -13,14 +13,17 @@ namespace Gma.DataStructures.StringSearch.DemoApp
             m_Stack = new Stack<KeyValuePair<string, T>>();
         }
 
-        public IEnumerable<T> Retrieve(string query)
+        public List<T> Retrieve(string query)
         {
+            List<T> tmp = new List<T>();
             foreach (var keyValuePair in m_Stack)
             {
                 string key = keyValuePair.Key;
                 T value = keyValuePair.Value;
-                if (key.Contains(query)) yield return value;
+                if (key.Contains(query)) tmp.Add(value);
             }
+
+            return tmp;
         }
 
         public void Add(string key, T value)

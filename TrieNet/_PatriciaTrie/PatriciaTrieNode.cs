@@ -28,26 +28,17 @@ namespace Gma.DataStructures.StringSearch
             m_Children = children;
         }
 
-        protected override int KeyLength
-        {
-            get { return m_Key.Length; }
-        }
+        protected override int KeyLength => m_Key.Length;
 
         protected override IEnumerable<TValue> Values()
-        {
-            return m_Values;
-        }
+            => m_Values;
 
         protected override IEnumerable<TrieNodeBase<TValue>> Children()
-        {
-            return m_Children.Values;
-        }
+            => m_Children.Values;
 
 
         protected override void AddValue(TValue value)
-        {
-            m_Values.Enqueue(value);
-        }
+            => m_Values.Enqueue(value);
 
         internal virtual void Add(StringPartition keyRest, TValue value)
         {
@@ -103,8 +94,7 @@ namespace Gma.DataStructures.StringSearch
 
         protected void GetOrCreateChild(StringPartition key, TValue value)
         {
-            PatriciaTrieNode<TValue> child;
-            if (!m_Children.TryGetValue(key[0], out child))
+            if (!m_Children.TryGetValue(key[0], out PatriciaTrieNode<TValue> child))
             {
                 child = new PatriciaTrieNode<TValue>(key, value);
                 m_Children.Add(key[0], child);
@@ -123,8 +113,7 @@ namespace Gma.DataStructures.StringSearch
         protected override TrieNodeBase<TValue> GetChildOrNull(string query, int position)
         {
             if (query == null) throw new ArgumentNullException("query");
-            PatriciaTrieNode<TValue> child;
-            if (m_Children.TryGetValue(query[position], out child))
+            if (m_Children.TryGetValue(query[position], out PatriciaTrieNode<TValue> child))
             {
                 var queryPartition = new StringPartition(query, position, child.m_Key.Length);
                 if (child.m_Key.StartsWith(queryPartition))
