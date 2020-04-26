@@ -51,7 +51,7 @@ namespace Gma.DataStructures.StringSearch
 
             for (var i = 0; i < word.Length; ++i)
             {
-                string ch = word[i];
+                char ch = word[i];
                 // follow the EdgeA<T> corresponding to this char
                 Edge<T> currentEdge = currentNode.GetEdge(ch);
                 if (null == currentEdge)
