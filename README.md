@@ -1,4 +1,29 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/4ruj2ijq2uc0pu2m/branch/master?svg=true)](https://ci.appveyor.com/project/gmamaladze/trienet/branch/master) [![NuGet version](https://badge.fury.io/nu/TrieNet.svg)](https://badge.fury.io/nu/TrieNet)
+This is a Fork of TrieNet intended to properly support .NET Standard 2.1+ (only).
+Improvements have made to tries to return a list instead of an IEnumerable. In editing contexts this avoids copying & large memory allocations. Due to the lack of an IList<T>.Empty, make sure to check that the list is not null.
+	
+Basic performance Benchmark compared to the main repository for UkkonenTrie:
+(The following have been realized on a 20k sentence trie.)
+(Also, the original TrieNet.Core NuGet package is built as Debug, lacking optimizations.)
+```
+Basic string search (3 chars) - 3x Speed improvement
+|          Method |            Mean |           Error |          StdDev |      Gen 0 | Gen 1 | Gen 2 | Allocated |
+|-----------------|----------------:|----------------:|----------------:|-----------:| -----:|------:| ---------:| 
+|   OldShortParse |        475.8 ns |         5.99 ns |         5.60 ns |          - |     - |     - |         - |
+|   NewShortParse |        150.8 ns |         0.32 ns |         0.30 ns |          - |     - |     - |         - |
+
+Basic string search (25 chars) - 3x Speed improvement
+|          Method |            Mean |           Error |          StdDev |      Gen 0 | Gen 1 | Gen 2 | Allocated |
+|-----------------|----------------:|----------------:|----------------:|-----------:| -----:|------:| ---------:| 
+|    OldLongParse |        474.2 ns |         8.83 ns |         8.26 ns |          - |     - |     - |         - |
+|    NewLongParse |        149.8 ns |         0.37 ns |         0.35 ns |          - |     - |     - |         - |
+
+Building Ukkonen Trie (3 chars) - ~5x Speed Improvement, x8 build memory allocation
+|          Method |            Mean |           Error |          StdDev |      Gen 0 | Gen 1 | Gen 2 | Allocated |
+|-----------------|----------------:|----------------:|----------------:|-----------:| -----:|------:| ---------:| 
+|    OldBuildTrie | 44,202,494.7 ns |   857,548.81 ns |   953,163.24 ns |  6750.0000 |     - |     - | 1776176 B |
+|    NewBuildTrie |  9,203,427.7 ns |   179,211.84 ns |   191,754.66 ns |   937.5000 |     - |     - |  248096 B |
+```
+
 
 ![TrieNet - The library provides .NET Data Structures for Prefix String Search and Substring (Infix) Search to Implement Auto-completion and Intelli-sense.](/img/trienet.png)
 
