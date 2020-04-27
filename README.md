@@ -1,9 +1,17 @@
 This is a Fork of TrieNet intended to properly support .NET Standard 2.1+ (only).
-Improvements have made to tries to return a list instead of an IEnumerable. In editing contexts this avoids copying & large memory allocations. Due to the lack of an IList<T>.Empty, make sure to check that the list is not null.
-	
-Basic performance Benchmark compared to the main repository for UkkonenTrie:
-(The following have been realized on a 20k sentence trie.)
-(Also, the original TrieNet.Core NuGet package is built as Debug, lacking optimizations.)
+
+
+Improvements have made to tries such as return a list instead of an IEnumerable, In editing contexts this avoids copying & large memory allocations. 
+
+Linq usage has been minimized.
+
+Most of the code purposed to building the UkkonenTrie has been edited to make use of Span, considerably speeding up the process and reducing the amount of string copies.
+
+
+Due to the lack of an IList<T>.Empty, make sure to check that the list is not null.
+
+
+Basic performance Benchmark compared to the main repository for UkkonenTrie provided below, the following have been realized on a 20k sentence trie, also, the original TrieNet.Core NuGet package is built as Debug, lacking optimizations.
 ```
 Basic string search (3 chars) - 3x Speed improvement
 |          Method |            Mean |           Error |          StdDev |      Gen 0 | Gen 1 | Gen 2 | Allocated |
