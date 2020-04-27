@@ -1,6 +1,8 @@
+# Fork Information
+
 This is a Fork of TrieNet intended to properly support .NET Standard 2.1+ (only).
 
-
+# Improvements made to base repository
 Improvements have made to tries such as return a list instead of an IEnumerable, In editing contexts this avoids copying & large memory allocations. 
 
 Linq usage has been minimized.
@@ -31,6 +33,9 @@ Building Ukkonen Trie (3 chars) - ~5x Speed Improvement, x8 build memory allocat
 |    OldBuildTrie | 44,202,494.7 ns |   857,548.81 ns |   953,163.24 ns |  6750.0000 |     - |     - | 1776176 B |
 |    NewBuildTrie |  9,203,427.7 ns |   179,211.84 ns |   191,754.66 ns |   937.5000 |     - |     - |  248096 B |
 ```
+
+
+
 
 
 ![TrieNet - The library provides .NET Data Structures for Prefix String Search and Substring (Infix) Search to Implement Auto-completion and Intelli-sense.](/img/trienet.png)
