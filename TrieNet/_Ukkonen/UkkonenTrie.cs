@@ -85,7 +85,7 @@ namespace Gma.DataStructures.StringSearch
             // reset activeLeaf
             _activeLeaf = _root;
 
-            string remainder = key;
+            string remainder = key.ToLower();
             Node<T> s = _root;
 
             // proceed with tree construction (closely related to procedure in
