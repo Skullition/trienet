@@ -129,7 +129,7 @@ namespace Gma.DataStructures.StringSearch
          *                  the last NodeA<T> that can be reached by following the path denoted by stringPart starting from inputs
          *         
          */
-        private bool TestAndSplit(Node<T> inputs, ReadOnlySpan<char> stringPart, char t, ReadOnlySpan<char> remainder, T value, out Node<T> node)
+        private static bool TestAndSplit(Node<T> inputs, ReadOnlySpan<char> stringPart, char t, ReadOnlySpan<char> remainder, T value, out Node<T> node)
         {
             // descend the tree as far as possible
             Node<T> s = Canonize(inputs, stringPart, out ReadOnlySpan<char> str);
@@ -159,9 +159,10 @@ namespace Gma.DataStructures.StringSearch
                 r.AddEdge(newlabel[0], g);
                 s.AddEdge(str[0], newedge);
 
-                node = s;
+                node = r;
                 return false;
             }
+
             Edge<T> e = s.GetEdge(t);
             if (e is null)
             {
@@ -287,7 +288,7 @@ namespace Gma.DataStructures.StringSearch
                 oldroot = r;
 
                 // line 6
-                if (s.Suffix != null)
+                if (s.Suffix is null)
                 {
                     // root NodeA<T>
                     //TODO Check why assert
