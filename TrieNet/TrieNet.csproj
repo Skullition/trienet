@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
     <PackageId>TrieNet</PackageId>
     <Authors>TrieNet</Authors>
     <Company>George Mamaladze</Company>
